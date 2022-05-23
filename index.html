@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<!-- David Strickland
+    05/14/2022 -->
+ 
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="index.css">
+        <title>Sol's Game</title>
+        <script type="text/jscript" src="index.js"></script> 
+    </head>
+
+    <body onload="resetGame()">
+        <div><h1>Sol's Game</h1></div>
+        <section class="game-wrapper">
+            <div>
+                <button id="0" class="blue" onclick="compare('0')"></button>
+            </div>
+            <div>
+                <button id="1" class="red" onclick="compare('1')"></button>
+            </div>
+            <div>
+                <button id="2" class="yellow" onclick="compare('2')"></button>
+            </div>
+            <div>
+                <button id="3" class="green" onclick="compare('3')"></button>
+            </div>
+        </section>
+
+        <section class="play-btn-wrapper">
+            <div class="btn-wrapper">
+                <button id="4" class="btn play" onclick="play()">Play</button>
+            </div>
+
+            <div class="btn-wrapper">
+                <button id="5" class="btn reset" onclick="resetGame()">Reset</button>
+            </div>
+        </section>
+        
+    </body>
+</html>
+

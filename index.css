@@ -1,0 +1,78 @@
+:root{
+
+    --blue1: hsl(228, 95%, 48%);
+    --red1: hsl(359, 95%, 48%);
+    --yellow1: hsl(60, 95%, 48%);
+    --green1: hsl(126, 100%, 56%);
+
+    --blue2: hsl(228, 95%, 76%);
+    --red2: hsl(0, 95%, 74%);
+    --yellow2: hsl(60, 95%, 85%);
+    --green2: hsl(126, 100%, 80%);
+
+    --neon-blue: hsl(233, 100%, 50%);
+    --neon-red: hsl(296, 100%, 50%);
+    --neon-yellow: hsl(54, 100%, 50%);
+    --neon-green: hsl(94, 86%, 51%);
+
+    --sol-blue: hsl(228, 87%, 57%);
+}
+
+
+body{
+    min-height: 100vh;
+    display: grid;
+    place-content: center;
+    background-image: url(granite-kitchen-floor.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* background-color: rgb(32, 25, 25); */
+}
+
+h1{
+    text-transform: uppercase;
+    color: var(--neon-green);
+    text-align: center;
+}
+
+.game-wrapper{
+    display: grid;
+    grid-template-columns: 10rem 10rem;
+    grid-template-rows: 10rem;
+    grid-template-areas:
+    "blue red"
+    "yellow green";
+    column-gap: .3rem;
+    row-gap: .4rem;
+    width: 100%;
+}
+
+.blue, .red,
+.yellow, .green,
+.btn{
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.play-btn-wrapper{
+    display: grid;
+    place-items: center;
+    grid-template-columns: 10rem 10rem;
+    grid-template-rows: 5rem;
+    grid-template-areas:
+    "play reset";
+    column-gap: .3rem;
+    margin-top: 1rem;
+    width: 100%;
+}
+
+.btn{
+    background-color: var(--blue2);
+    width: 10rem;
+    height: 5rem;
+    text-align: center;
+    border-radius: 10px;
+    font-size: 2.5em;
+    color: var(--yellow2);
+    text-transform: uppercase;
+}
