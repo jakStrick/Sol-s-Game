@@ -33,7 +33,7 @@ function resetGame(){
 
     // hack to let timer settle
     // probabaly there's a timer rest function.
-    if (semif == true){
+    if (semif){
         resetGame();
         semif = false;
     }
@@ -56,7 +56,7 @@ function setUpButtons(){
         document.getElementById(i).style.width = w + "rem";
         document.getElementById(i).style.height = h + "rem";
 
-        restoreBtnClr(i);
+        chgClrs(i);
     }
 
 }
@@ -106,13 +106,12 @@ async function doTimeouts(){
 
     for (var i = 0; i < btn.length; i++) {
 
-        clrID = btn[i] + 4;
-        chgClrs(btn[i], clrID);
+        chgClrs(btn[i], true);
 
         /* wait */
         await new Promise(res => { setTimeout(res, 1000); });
 
-        restoreBtnClr(btn[i]);
+        chgClrs(btn[i]);
 
         /* wait */
         await new Promise(res => { setTimeout(res, 800); });    
@@ -163,19 +162,22 @@ function rndomize(){
     return rn;
 }
 
-function restoreBtnClr(id){
+/* function restoreBtnClr(id){
 
-    var newID = id;
-    chgClrs(id, newID);
-}
+    //var newID = id;
+    chgClrs(id);
+} */
 
-function chgClrs(id, newClrID){
-
+function chgClrs(id, aci = false){
+    
+    var altClrID;
    /*  console.log("newClorID = " + newClrID); */
-    if(newClrID < 4)
-        newClrID = id;
+    if(aci)
+        altClrID = id + 4;
+    else
+        altClrID = id;
 
-    document.getElementById(id).style.backgroundColor = getClr(selectColor(newClrID));
+    document.getElementById(id).style.backgroundColor = getClr(selectColor(altClrID));
 }
 
 /* you would think this would work? */
