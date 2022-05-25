@@ -3,16 +3,20 @@
 to compare against later when user pushes the 
 buttons */
 const btn = ["-1"];
-var comparedID = 0;
+var btnCntr = 0;
 var deCntr = 0;
 var semif = false;
 
+/* clock */
+const secondHand = document.querySelector('.second-hand');
+const minsHand = document.querySelector('.min-hand');
+const hourHand = document.querySelector('.hour-hand');
 
 /* rest the game */
 function resetGame(){
 
     /* reset the globals and array */
-    comparedID = 0; 
+    btnCntr = 0; 
     deCntr = 0; 
     btn.length = 0; 
 
@@ -122,19 +126,18 @@ async function doTimeouts(){
 
 function compare(btnID){
 
-    currentid = btnID;
-
-    console.log("ComparedID = " + comparedID + " Pushed ID = " + currentid + " btn ComapredID = " + btn[comparedID]);
-
-    if( btn[comparedID] != currentid ){
-        alert("Ha! Ha! You lose! Your score is " + btn.length + " button matche(s)");
-        comparedID = 0;
+    score = btn.length - 1;
+    /* console.log("ComparedID = " + btnCntr + " Pushed ID = " + currentid + " btn ComapredID = " + btn[btnCntr]);
+ */
+    if( btn[btnCntr] != btnID ){
+        alert("Ha! Ha! You lose! Your score is " + score + " button matche(s)");
+        btnCntr = 0;
         btn.length = 0;
         semif = true;
         resetGame();
     }
    
-    comparedID++;
+    btnCntr++;
     deCntr--;
 
     chkDeCntr(deCntr);
@@ -144,7 +147,7 @@ async function chkDeCntr(dc){
 
     await new Promise(res => { setTimeout(res, 1500); });
     if(dc <= 0){
-        comparedID = 0;
+        btnCntr = 0;
         doRandomClrs();
     }
 }
@@ -153,7 +156,7 @@ function disableBtns(i, bool){
     document.getElementById(i).disabled = bool;
 }
 
-/* get a random button number */
+/* get a random button number from 0 - 3 */
 function rndomize(){
 
     var rn = Math.floor(Math.random() * 4);
@@ -265,4 +268,24 @@ const btnDimentions = {
     }
 };
 
+/* clock */
+function setDate() {
+    const now = new Date();
+
+    const seconds = now.getSeconds();
+    const secondsDegrees = ((seconds / 60) * 360) + 90;
+    secondHand.style.transform = `rotate(${secondsDegrees}deg)`;
+
+    const mins = now.getMinutes();
+    const minsDegrees = ((mins / 60) * 360) + ((seconds/60)*6) + 90;
+    minsHand.style.transform = `rotate(${minsDegrees}deg)`;
+
+    const hour = now.getHours();
+    const hourDegrees = ((hour / 12) * 360) + ((mins/60)*30) + 90;
+    hourHand.style.transform = `rotate(${hourDegrees}deg)`;
+}
+
+setInterval(setDate, 1000);
+
+setDate();
 

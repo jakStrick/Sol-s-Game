@@ -10,10 +10,19 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="index.css">
         <title>Sol's Game</title>
-        <script type="text/jscript" src="index.js"></script> 
+        
     </head>
 
     <body onload="resetGame()">
+
+        <div class="clock">
+            <div class="clock-face">
+                <div class="hand hour-hand"></div>
+                <div class="hand min-hand"></div>
+                <div class="hand second-hand"></div>
+            </div>
+        </div>
+
         <div><h1>Sol's Game</h1></div>
         <section class="game-wrapper">
             <div>
@@ -39,6 +48,8 @@
                 <button id="5" class="btn reset" onclick="resetGame()">Reset</button>
             </div>
         </section>
+
+        <script type="text/jscript" src="index.js"></script> 
         
     </body>
 </html>
