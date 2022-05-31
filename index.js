@@ -5,7 +5,10 @@ buttons */
 const btn = ["-1"];
 var btnCntr = 0;
 var deCntr = 0;
-var semif = false;
+var semiph = false;
+var wait1 = 0;
+var wait2 = 0;
+var wait3 = 0;
 
 /* clock */
 const secondHand = document.querySelector('.second-hand');
@@ -15,10 +18,17 @@ const hourHand = document.querySelector('.hour-hand');
 /* rest the game */
 function resetGame(){
 
+    clearTimeout(doTimeouts);
+    clearTimeout(play);
+    clearTimeout(chkDeCntr);
+
     /* reset the globals and array */
-    btnCntr = 0; 
+    btnCntr = 0;  
     deCntr = 0; 
     btn.length = 0; 
+    wait1 = 1000;
+    wait2 = 800;
+    wait3 = 1500;
 
     for (var i = 0; i <=3 ; i++)
     {
@@ -33,11 +43,11 @@ function resetGame(){
 
     // hack to let timer settle
     // probabaly there's a timer rest function.
-    if (semif){
-        resetGame();
-        semif = false;
+    /* if (semiph){
+        semiph = false;
+        resetGame();  
     }
-   
+    */
     console.log("game initialized");
 }
 
@@ -63,7 +73,7 @@ function setUpButtons(){
 
 async function play(){
 
-    /* console.log("In play"); */
+    console.log("In play");
 
     disableBtns(4, true);
     
@@ -82,6 +92,13 @@ function doRandomClrs(){
     {
         disableBtns(i, true);
     }
+
+    /* speed up the game */
+    if ( btn.length == 3 || btn.length == 5  ){
+        wait1 = wait1 * .85;
+        wait2 = wait2 * .85;
+        wait3 = wait3 * .85;
+    } 
 
     if (btn[0] == "-1"){
 
@@ -109,12 +126,12 @@ async function doTimeouts(){
         chgClrs(btn[i], true);
 
         /* wait */
-        await new Promise(res => { setTimeout(res, 1000); });
+        await new Promise(res => { setTimeout(res, wait1); });
 
         chgClrs(btn[i]);
 
         /* wait */
-        await new Promise(res => { setTimeout(res, 800); });    
+        await new Promise(res => { setTimeout(res, wait2); });    
     }
 
     for (var i = 0; i <=3 ; i++){
@@ -125,18 +142,18 @@ async function doTimeouts(){
 
 function compare(btnID){
 
-    score = btn.length - 1;
     /* console.log("ComparedID = " + btnCntr + " Pushed ID = " + currentid + " btn ComapredID = " + btn[btnCntr]);
  */
     if( btn[btnCntr] != btnID ){
-        alert("Ha! Ha! You lose! Your score is " + score + " button matche(s)");
+        alert("Ha! Ha! You lose! Your score is " + btnCntr + " button matche(s)");
         btnCntr = 0;
         btn.length = 0;
-        semif = true;
+        semiph = true;
         resetGame();
     }
    
     btnCntr++;
+
     deCntr--;
 
     chkDeCntr(deCntr);
@@ -144,7 +161,7 @@ function compare(btnID){
 
 async function chkDeCntr(dc){
 
-    await new Promise(res => { setTimeout(res, 1500); });
+    await new Promise(res => { setTimeout(res, wait3); });
     if(dc <= 0){
         btnCntr = 0;
         doRandomClrs();
