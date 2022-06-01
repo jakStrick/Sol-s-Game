@@ -135,10 +135,10 @@ async function changeColors(){
 
 function compare(btnID){
 
-    /* console.log("ComparedID = " + btnCntr + " Pushed ID = " + currentid + " btn ComapredID = " + btn[btnCntr]);
- */
-    if( btn[btnCntr] != btnID ){
-        alert("Ha! Ha! You lose! Your score is " + btnCntr + " button matche(s)");
+    var score = btnCntr; //have to do this otherwise gets cleared out by resetGame()
+    
+ if( btn[btnCntr] != btnID ){
+        alert("Ha! Ha! You lose! Your score is " + score + " button matche(s)");
         resetGame();
     }
    
@@ -218,7 +218,6 @@ function waitTime(wait){
     speedUp(wait);
 
     return wait;
-
 }
 
 function speedUp(wt){

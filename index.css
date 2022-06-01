@@ -10,10 +10,10 @@
     --yellow2: hsl(60, 95%, 85%);
     --green2: hsl(126, 100%, 80%);
 
-    --neon-blue: hsl(233, 100%, 40%);
-    --neon-red: hsl(296, 100%, 40%);
-    --neon-yellow: hsl(54, 100%, 40%);
-    --neon-green: hsl(94, 86%, 40%);
+    --neon-blue: hsl(233, 86%, 45%);
+    --neon-red: hsl(296, 86%, 45%);
+    --neon-yellow: hsl(54, 86%, 45%);
+    --neon-green: hsl(94, 86%, 45%);
 
     --sol-blue: hsl(228, 87%, 57%);
 }
