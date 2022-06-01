@@ -173,11 +173,11 @@ function getRandomNum(){
     chgClrs(id);
 } */
 
-function chgClrs(id, aci = false){
+function chgClrs(id, acID = false){
     
     var altClrID;
    /*  console.log("newClorID = " + newClrID); */
-    if(aci)
+    if(acID)
         altClrID = id + 4;
     else
         altClrID = id;
@@ -215,12 +215,16 @@ function waitTime(wait){
             return;
     }
 
-    /* speed up the game */
-    if ( btn.length == 5 || btn.length == 10 )
-        wait = wait * .85;
+    speedUp(wait);
 
     return wait;
 
+}
+
+function speedUp(wt){
+    /* speed up the game */
+    if ( btn.length == 5 || btn.length == 10 || btn.length == 15 )
+        wt = wt * .85;
 }
 
 /* you would think this would work? */
