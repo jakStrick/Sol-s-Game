@@ -5,30 +5,21 @@ buttons */
 const btn = ["-1"];
 var btnCntr = 0;
 var deCntr = 0;
-var semiph = false;
-var wait1 = 0;
-var wait2 = 0;
-var wait3 = 0;
-
-/* clock */
-const secondHand = document.querySelector('.second-hand');
-const minsHand = document.querySelector('.min-hand');
-const hourHand = document.querySelector('.hour-hand');
 
 /* rest the game */
 function resetGame(){
 
-    clearTimeout(doTimeouts);
+ /*    clearTimeout(changeColors);
     clearTimeout(play);
-    clearTimeout(chkDeCntr);
+    clearTimeout(chkDeCntr); */
+
+    setInterval(setDate, 1000);
+    setDate();
 
     /* reset the globals and array */
     btnCntr = 0;  
     deCntr = 0; 
     btn.length = 0; 
-    wait1 = 1000;
-    wait2 = 800;
-    wait3 = 1500;
 
     for (var i = 0; i <=3 ; i++)
     {
@@ -76,29 +67,26 @@ async function play(){
     console.log("In play");
 
     disableBtns(4, true);
-    
-    await new Promise(res => { setTimeout(res, 500); });
 
-    doRandomClrs(); 
+    await new Promise(res => { setTimeout(res, waitTime(2)); });
+    start();
+}
+
+function start(){
+    setRandomClrs(); 
+    changeColors();
 }
 
 /* change colors wait a bit and change back 
 gives the sense that colors are changing. */
-function doRandomClrs(){
-    
-    var rndBtn = rndomize();
+function setRandomClrs(){
+
+    var rndBtn = getRandomNum();
 
     for (var i = 0; i <= 3 ; i++)
     {
         disableBtns(i, true);
     }
-
-    /* speed up the game */
-    if ( btn.length == 3 || btn.length == 5  ){
-        wait1 = wait1 * .85;
-        wait2 = wait2 * .85;
-        wait3 = wait3 * .85;
-    } 
 
     if (btn[0] == "-1"){
 
@@ -112,31 +100,35 @@ function doRandomClrs(){
 
     deCntr = btn.length;
 
-    doTimeouts();
-
     /* for (var i = 0; i <=3 ; i++){
         disableBtns(i, false);
     } */
+
+    return;
 }
 
-async function doTimeouts(){
+async function changeColors(){
+
+    var wt = 0;
 
     for (var i = 0; i < btn.length; i++) {
 
         chgClrs(btn[i], true);
 
         /* wait */
-        await new Promise(res => { setTimeout(res, wait1); });
+        await new Promise(res => { setTimeout(res, waitTime(2)); });
 
         chgClrs(btn[i]);
 
         /* wait */
-        await new Promise(res => { setTimeout(res, wait2); });    
+        await new Promise(res => { setTimeout(res, waitTime(1)); });    
     }
 
     for (var i = 0; i <=3 ; i++){
         disableBtns(i, false);
     }
+
+    return;
 
 }
 
@@ -161,10 +153,10 @@ function compare(btnID){
 
 async function chkDeCntr(dc){
 
-    await new Promise(res => { setTimeout(res, wait3); });
+    await new Promise(res => { setTimeout(res, waitTime(3)); });
     if(dc <= 0){
         btnCntr = 0;
-        doRandomClrs();
+        start();
     }
 }
 
@@ -173,8 +165,8 @@ function disableBtns(i, bool){
 }
 
 /* get a random button number from 0 - 3 */
-function rndomize(){
-
+function getRandomNum(){
+    console.log("In getRandomNum");
     var rn = Math.floor(Math.random() * 4);
     return rn;
 }
@@ -195,6 +187,44 @@ function chgClrs(id, aci = false){
         altClrID = id;
 
     document.getElementById(id).style.backgroundColor = getClr(selectColor(altClrID));
+}
+
+function waitTime(wait){
+
+    /* wait1 = 1000;
+    wait2 = 800;
+    wait3 = 1500;
+     */
+
+    switch(wait) {
+
+        case 0:
+            wait = 500;
+            return;
+
+        case 1:
+            wait = 800;
+            break;
+
+        case 2:
+            wait = 1000;
+            break;
+
+        case 3:
+            wait = 1500;
+            break;
+
+        default:
+            alert("OOPS not a time allowed!");
+            return;
+    }
+
+    /* speed up the game */
+    if ( btn.length == 5 || btn.length == 10 )
+        wait = wait * .85;
+
+    return wait;
+
 }
 
 /* you would think this would work? */
@@ -287,8 +317,44 @@ const btnDimentions = {
     }
 };
 
+/*  I thought this clock as I thought it looked cool as part of my project. 
+    I copied it from GitHub -- 
+    the license file is included with my project and I also included it here 
+
+    /* **************************************************************************
+
+     MIT License
+
+    Copyright (c) 2018 Swasti Ranjan Senapati
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE. 
+
+    ************************************************************************** */
+
 /* clock */
 function setDate() {
+
+    /* clock */
+    var secondHand = document.querySelector('.second-hand');
+    var minsHand = document.querySelector('.min-hand');
+    var hourHand = document.querySelector('.hour-hand');
+
     const now = new Date();
 
     const seconds = now.getSeconds();
@@ -303,8 +369,3 @@ function setDate() {
     const hourDegrees = ((hour / 12) * 360) + ((mins/60)*30) + 90;
     hourHand.style.transform = `rotate(${hourDegrees}deg)`;
 }
-
-setInterval(setDate, 1000);
-
-setDate();
-
