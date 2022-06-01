@@ -262,19 +262,19 @@ function selectColor(id){
             break;
 
         case 4:
-            btnClr = "--blue2";
+            btnClr = "--neon-blue";
             break;
 
         case 5:
-            btnClr = "--red2";
+            btnClr = "--neon-red";
             break;
 
         case 6:
-            btnClr = "--yellow2";
+            btnClr = "--neon-yellow";
             break;
 
         case 7:
-            btnClr = "--green2";
+            btnClr = "--neon-green";
             break;
 
         default:
@@ -290,7 +290,7 @@ function getClr(clr) {
 
     var r = document.querySelector(':root');
 
-    // Get the styles (properties and values) for the root
+    // Get the styles (color values) from root
     var rs = getComputedStyle(r);
     
     // output color variable
