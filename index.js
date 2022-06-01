@@ -52,6 +52,7 @@ function setUpButtons(){
     var h = btnDimentions.btnHeight;
 
     /* reset all background colors to original values */
+    /* and set button height and width */
     for (var i = 0; i <=3; i++)
     {
         document.getElementById(i).style.width = w + "rem";
@@ -138,9 +139,6 @@ function compare(btnID){
  */
     if( btn[btnCntr] != btnID ){
         alert("Ha! Ha! You lose! Your score is " + btnCntr + " button matche(s)");
-        btnCntr = 0;
-        btn.length = 0;
-        semiph = true;
         resetGame();
     }
    
@@ -166,9 +164,7 @@ function disableBtns(i, bool){
 
 /* get a random button number from 0 - 3 */
 function getRandomNum(){
-    console.log("In getRandomNum");
-    var rn = Math.floor(Math.random() * 4);
-    return rn;
+    return Math.floor(Math.random() * 4);
 }
 
 /* function restoreBtnClr(id){
