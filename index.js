@@ -317,7 +317,7 @@ const btnDimentions = {
     }
 };
 
-/*  I thought this clock as I thought it looked cool as part of my project. 
+/*  I thought this clock looked cool as part of my project. 
     I copied it from GitHub -- 
     the license file is included with my project and I also included it here 
 
