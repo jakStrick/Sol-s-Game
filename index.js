@@ -10,7 +10,7 @@ var deCntr = 0;
 function resetGame(){
 
  /*    clearTimeout(changeColors);
-    clearTimeout(play);
+    clearTimeout(start);
     clearTimeout(chkDeCntr); */
 
     setInterval(setDate, 1000);
@@ -47,7 +47,6 @@ function setUpButtons(){
     btnDimentions.btnW = 10;
     btnDimentions.btnH = 10;
 
-
     var w = btnDimentions.btnWidth;
     var h = btnDimentions.btnHeight;
 
@@ -63,17 +62,19 @@ function setUpButtons(){
 
 }
 
-async function play(){
+async function start(){
 
-    console.log("In play");
+    console.log("In start");
 
     disableBtns(4, true);
 
     await new Promise(res => { setTimeout(res, waitTime(2)); });
-    start();
+    //wait(true, 2);
+    play();
 }
 
-function start(){
+function play(){
+    btnCntr = 0;
     setRandomClrs(); 
     changeColors();
 }
@@ -117,12 +118,15 @@ async function changeColors(){
         chgClrs(btn[i], true);
 
         /* wait */
-        await new Promise(res => { setTimeout(res, waitTime(2)); });
-
+        //wait(false, 2, true, i);
+        await new Promise(res => { setTimeout(res, speedUp(waitTime(2))); });
+        
+        //wait(false, 1, false, i);
+        
         chgClrs(btn[i]);
 
         /* wait */
-        await new Promise(res => { setTimeout(res, waitTime(1)); });    
+        await new Promise(res => { setTimeout(res, speedUp(waitTime(1))); });    
     }
 
     for (var i = 0; i <=3 ; i++){
@@ -133,30 +137,37 @@ async function changeColors(){
 
 }
 
-function compare(btnID){
+async function compare(btnID){
 
-    var score = btnCntr; //have to do this otherwise gets cleared out by resetGame()
+    var score = btn.length - 1; //have to do this otherwise gets cleared out by resetGame()
     
  if( btn[btnCntr] != btnID ){
-        alert("Ha! Ha! You lose! Your score is " + score + " button matche(s)");
-        resetGame();
-    }
+    clearTimeout(waitTime);
+    alert("Ha! Ha! You lose! Your score is " + score + " button matche(s)");
+    resetGame();
+}       
+
    
     btnCntr++;
 
     deCntr--;
 
-    chkDeCntr(deCntr);
+    var pl = deCntr <= 0;
+    var wt = 3;
+    
+    await new Promise(res => { setTimeout(res, speedUp(waitTime(wt))); });
+    
+    if(pl) 
+        play();     
 }
 
-async function chkDeCntr(dc){
+/* async function wait(pl = false, wt, acID = false, id = 0){
 
-    await new Promise(res => { setTimeout(res, waitTime(3)); });
-    if(dc <= 0){
-        btnCntr = 0;
-        start();
-    }
-}
+    await new Promise(res => { setTimeout(res, waitTime(wt)); });
+
+    
+     */
+//}
 
 function disableBtns(i, bool){
     document.getElementById(i).disabled = bool;
@@ -194,7 +205,7 @@ function waitTime(wait){
 
     switch(wait) {
 
-        case 0:
+        case 0:btnCntr
             wait = 500;
             return;
 
@@ -215,8 +226,6 @@ function waitTime(wait){
             return;
     }
 
-    speedUp(wait);
-
     return wait;
 }
 
@@ -224,6 +233,8 @@ function speedUp(wt){
     /* speed up the game */
     if ( btn.length == 5 || btn.length == 10 || btn.length == 15 )
         wt = wt * .85;
+
+    return wt;
 }
 
 /* you would think this would work? */
