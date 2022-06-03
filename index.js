@@ -76,6 +76,15 @@ async function start(){
 
 function play(){
     btnCntr = 0;
+    var btnLen = btn.length;
+
+    if ( btnLen == 4 || btnLen == 8 || btnLen == 12 ){
+        wt2 = speedUp(wt2);
+        wt1 = speedUp(wt1);
+        wt3 = speedUp(wt3);
+        console.log("speeding up " + btnLen);
+    }
+
     setRandomClrs(); 
     changeColors();
 }
@@ -111,11 +120,6 @@ function setRandomClrs(){
 }
 
 async function changeColors(){
-
-    var wt = 0;
-    wt2 = speedUp(wt2);
-    wt1 = speedUp(wt1);
-    wt3 = speedUp(wt3);
 
     for (var i = 0; i < btn.length; i++) {
 
@@ -211,12 +215,7 @@ function getWaitTime(wait){
 
 function speedUp(wt){
     /* speed up the game */
-    var btnLen = btn.length - 1;
-    if ( btnLen == 4 || btnLen == 8 || btnLen == 12 ){
-        wt = wt * .85;
-        //console.log("speeding up " + wt);
-    }
-
+    wt = wt * .85;
     return wt;
 }
 
