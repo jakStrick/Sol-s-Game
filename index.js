@@ -141,13 +141,11 @@ async function compare(btnID){
 
     var score = btn.length - 1; //have to do this otherwise gets cleared out by resetGame()
     
- if( btn[btnCntr] != btnID ){
-    clearTimeout(waitTime);
-    alert("Ha! Ha! You lose! Your score is " + score + " button matche(s)");
-    resetGame();
-}       
+    if( btn[btnCntr] != btnID ){
+        alert("Ha! Ha! You lose! Your score is " + score + " button matche(s)");
+        resetGame();
+    }       
 
-   
     btnCntr++;
 
     deCntr--;
@@ -161,14 +159,6 @@ async function compare(btnID){
         play();     
 }
 
-/* async function wait(pl = false, wt, acID = false, id = 0){
-
-    await new Promise(res => { setTimeout(res, waitTime(wt)); });
-
-    
-     */
-//}
-
 function disableBtns(i, bool){
     document.getElementById(i).disabled = bool;
 }
@@ -178,16 +168,10 @@ function getRandomNum(){
     return Math.floor(Math.random() * 4);
 }
 
-/* function restoreBtnClr(id){
-
-    //var newID = id;
-    chgClrs(id);
-} */
-
 function chgClrs(id, acID = false){
     
     var altClrID;
-   /*  console.log("newClorID = " + newClrID); */
+  
     if(acID)
         altClrID = id + 4;
     else
@@ -231,7 +215,7 @@ function waitTime(wait){
 
 function speedUp(wt){
     /* speed up the game */
-    if ( btn.length == 5 || btn.length == 10 || btn.length == 15 )
+    if ( btn.length == 4 || btn.length == 8 || btn.length == 12 )
         wt = wt * .85;
 
     return wt;
@@ -242,7 +226,7 @@ function speedUp(wt){
 
     console.log("waiting... " + ms);
 
-     // WAIT 1 SECOND
+     // WAIT x ms
      await new Promise(res => { setTimeout(res, ms); });
 
 } */
