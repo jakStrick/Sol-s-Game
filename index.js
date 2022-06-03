@@ -32,13 +32,6 @@ function resetGame(){
 
     setUpButtons();
 
-    // hack to let timer settle
-    // probabaly there's a timer rest function.
-    /* if (semiph){
-        semiph = false;
-        resetGame();  
-    }
-    */
     console.log("game initialized");
 }
 
@@ -118,10 +111,7 @@ async function changeColors(){
         chgClrs(btn[i], true);
 
         /* wait */
-        //wait(false, 2, true, i);
         await new Promise(res => { setTimeout(res, speedUp(waitTime(2))); });
-        
-        //wait(false, 1, false, i);
         
         chgClrs(btn[i]);
 
@@ -134,7 +124,6 @@ async function changeColors(){
     }
 
     return;
-
 }
 
 async function compare(btnID){
@@ -147,9 +136,7 @@ async function compare(btnID){
     }       
 
     btnCntr++;
-
     deCntr--;
-
     var pl = deCntr <= 0;
     var wt = 3;
     
@@ -159,8 +146,8 @@ async function compare(btnID){
         play();     
 }
 
-function disableBtns(i, bool){
-    document.getElementById(i).disabled = bool;
+function disableBtns(id, bool){
+    document.getElementById(id).disabled = bool;
 }
 
 /* get a random button number from 0 - 3 */
