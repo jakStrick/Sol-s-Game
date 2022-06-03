@@ -82,7 +82,7 @@ function play(){
         wt2 = speedUp(wt2);
         wt1 = speedUp(wt1);
         wt3 = speedUp(wt3);
-        console.log("speeding up " + btnLen);
+        /* console.log("speeding up " + btnLen); */
     }
 
     setRandomClrs(); 
