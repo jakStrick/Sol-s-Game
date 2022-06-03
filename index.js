@@ -5,6 +5,10 @@ buttons */
 const btn = ["-1"];
 var btnCntr = 0;
 var deCntr = 0;
+var wt0 = 0;
+var wt1 = 0;
+var wt2 = 0;
+var wt3 = 0;
 
 /* rest the game */
 function resetGame(){
@@ -19,7 +23,11 @@ function resetGame(){
     /* reset the globals and array */
     btnCntr = 0;  
     deCntr = 0; 
-    btn.length = 0; 
+    btn.length = 0;
+    wt0 = getWaitTime(0);
+    wt1 = getWaitTime(1);
+    wt2 = getWaitTime(2);
+    wt3 = getWaitTime(3);
 
     for (var i = 0; i <=3 ; i++)
     {
@@ -61,7 +69,7 @@ async function start(){
 
     disableBtns(4, true);
 
-    await new Promise(res => { setTimeout(res, waitTime(2)); });
+    await new Promise(res => { setTimeout(res, wt2); });
     //wait(true, 2);
     play();
 }
@@ -105,18 +113,21 @@ function setRandomClrs(){
 async function changeColors(){
 
     var wt = 0;
+    wt2 = speedUp(wt2);
+    wt1 = speedUp(wt1);
+    wt3 = speedUp(wt3);
 
     for (var i = 0; i < btn.length; i++) {
 
         chgClrs(btn[i], true);
 
         /* wait */
-        await new Promise(res => { setTimeout(res, speedUp(waitTime(2))); });
+        await new Promise(res => { setTimeout(res, wt2); });
         
         chgClrs(btn[i]);
 
         /* wait */
-        await new Promise(res => { setTimeout(res, speedUp(waitTime(1))); });    
+        await new Promise(res => { setTimeout(res, wt1); });    
     }
 
     for (var i = 0; i <=3 ; i++){
@@ -138,9 +149,7 @@ async function compare(btnID){
     btnCntr++;
     deCntr--;
     var pl = deCntr <= 0;
-    var wt = 3;
-    
-    await new Promise(res => { setTimeout(res, speedUp(waitTime(wt))); });
+    await new Promise(res => { setTimeout(res, wt3); });
     
     if(pl) 
         play();     
@@ -167,16 +176,16 @@ function chgClrs(id, acID = false){
     document.getElementById(id).style.backgroundColor = getClr(selectColor(altClrID));
 }
 
-function waitTime(wait){
+function getWaitTime(wait){
 
     /* wait1 = 1000;
     wait2 = 800;
     wait3 = 1500;
      */
-
+    console.log("wait " + wait);
     switch(wait) {
 
-        case 0:btnCntr
+        case 0:
             wait = 500;
             return;
 
@@ -202,8 +211,11 @@ function waitTime(wait){
 
 function speedUp(wt){
     /* speed up the game */
-    if ( btn.length == 4 || btn.length == 8 || btn.length == 12 )
+    var btnLen = btn.length - 1;
+    if ( btnLen == 4 || btnLen == 8 || btnLen == 12 ){
         wt = wt * .85;
+        //console.log("speeding up " + wt);
+    }
 
     return wt;
 }
@@ -296,7 +308,7 @@ const btnDimentions = {
     set btnH(h) {
         this.btnHeight = h;
     }
-};
+}
 
 /*  I thought this clock looked cool as part of my project. 
     I copied it from GitHub -- 
