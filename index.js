@@ -78,7 +78,8 @@ function play(){
     btnCntr = 0;
     var btnLen = btn.length;
 
-    if ( btnLen == 4 || btnLen == 8 || btnLen == 12 ){
+    if ( btnLen == 3 || btnLen == 6 || btnLen == 9 ){
+        console.log("play to speeding up... " + btnLen);
         wt2 = speedUp(wt2);
         wt1 = speedUp(wt1);
         wt3 = speedUp(wt3);
@@ -93,8 +94,11 @@ function play(){
 gives the sense that colors are changing. */
 function setRandomClrs(){
 
-    var rndBtn = getRandomNum();
+    /* get a random button number from 0 - 3 */
+    var  rndBtn = randomNum(4);
 
+    console.log("random number is " + rndBtn);
+    
     for (var i = 0; i <= 3 ; i++)
     {
         disableBtns(i, true);
@@ -163,11 +167,6 @@ function disableBtns(id, bool){
     document.getElementById(id).disabled = bool;
 }
 
-/* get a random button number from 0 - 3 */
-function getRandomNum(){
-    return Math.floor(Math.random() * 4);
-}
-
 function chgClrs(id, acID = false){
     
     var altClrID;
@@ -213,11 +212,12 @@ function getWaitTime(wait){
     return wait;
 }
 
-function speedUp(wt){
-    /* speed up the game */
-    wt = wt * .85;
-    return wt;
+function randomNum(id){
+    return Math.floor(Math.random() * id);
 }
+
+/* speed up the game a little */
+let speedUp = wt => wt * .85;
 
 /* you would think this would work? */
 /* async function waiting(ms) {
