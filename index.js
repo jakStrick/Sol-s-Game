@@ -1,6 +1,6 @@
 
-/* this application stores radomly generated numbers 
-to compare against later when user pushes the 
+/* this application stores radomly generated numbers
+to compare against later when user pushes the
 buttons */
 const btn = ["-1"];
 var btnCntr = 0;
@@ -9,9 +9,10 @@ var wt0 = 0;
 var wt1 = 0;
 var wt2 = 0;
 var wt3 = 0;
+let sf = true;
 
 /* rest the game */
-function resetGame(){
+function resetGame(sf){
 
  /*    clearTimeout(changeColors);
     clearTimeout(start);
@@ -21,13 +22,15 @@ function resetGame(){
     setDate();
 
     /* reset the globals and array */
-    btnCntr = 0;  
-    deCntr = 0; 
+    btnCntr = 0;
+    deCntr = 0;
     btn.length = 0;
     wt0 = getWaitTime(0);
     wt1 = getWaitTime(1);
     wt2 = getWaitTime(2);
     wt3 = getWaitTime(3);
+
+    setUpButtons();
 
     for (var i = 0; i <=3 ; i++)
     {
@@ -35,12 +38,16 @@ function resetGame(){
     }
 
     disableBtns(4, false);
-    
-    btn[0] = "-1"; 
 
-    setUpButtons();
+    btn[0] = "-1";
 
-    console.log("game initialized");
+     // hack to let timer settle
+    // probabaly there's a timer rest function.
+    if (sf == true){
+        resetGame(false);
+    }
+
+    alert("game initialized");
 }
 
 function setUpButtons(){
@@ -86,11 +93,11 @@ function play(){
         /* console.log("speeding up " + btnLen); */
     }
 
-    setRandomClrs(); 
+    setRandomClrs();
     changeColors();
 }
 
-/* change colors wait a bit and change back 
+/* change colors wait a bit and change back
 gives the sense that colors are changing. */
 function setRandomClrs(){
 
@@ -98,7 +105,7 @@ function setRandomClrs(){
     var  rndBtn = randomNum(4);
 
     console.log("random number is " + rndBtn);
-    
+
     for (var i = 0; i <= 3 ; i++)
     {
         disableBtns(i, true);
@@ -131,11 +138,11 @@ async function changeColors(){
 
         /* wait */
         await new Promise(res => { setTimeout(res, wt2); });
-        
+
         chgClrs(btn[i]);
 
         /* wait */
-        await new Promise(res => { setTimeout(res, wt1); });    
+        await new Promise(res => { setTimeout(res, wt1); });
     }
 
     for (var i = 0; i <=3 ; i++){
@@ -148,19 +155,19 @@ async function changeColors(){
 async function compare(btnID){
 
     var score = btn.length - 1; //have to do this otherwise gets cleared out by resetGame()
-    
+
     if( btn[btnCntr] != btnID ){
         alert("Ha! Ha! You lose! Your score is " + score + " button matche(s)");
-        resetGame();
-    }       
+        resetGame(true);
+    }
 
     btnCntr++;
     deCntr--;
     var pl = deCntr <= 0;
     await new Promise(res => { setTimeout(res, wt3); });
-    
-    if(pl) 
-        play();     
+
+    if(pl)
+        play();
 }
 
 function disableBtns(id, bool){
@@ -168,13 +175,13 @@ function disableBtns(id, bool){
 }
 
 function chgClrs(id, acID = false){
-    
+
     var altClrID;
-  
+
+    altClrID = id;
+
     if(acID)
-        altClrID = id + 4;
-    else
-        altClrID = id;
+        altClrID += 4;
 
     document.getElementById(id).style.backgroundColor = getClr(selectColor(altClrID));
 }
@@ -272,7 +279,7 @@ function selectColor(id){
         default:
             alert("An error has occured");
             return;
-    } 
+    }
 
     return btnClr;
 }
@@ -284,7 +291,7 @@ function getClr(clr) {
 
     // Get the styles (color values) from root
     var rs = getComputedStyle(r);
-    
+
     // output color variable
     return rs.getPropertyValue(clr);
 }
@@ -309,9 +316,9 @@ const btnDimentions = {
     }
 }
 
-/*  I thought this clock looked cool as part of my project. 
-    I copied it from GitHub -- 
-    the license file is included with my project and I also included it here 
+/*  I thought this clock looked cool as part of my project.
+    I copied it from GitHub --
+    the license file is included with my project and I also included it here
 
     /* **************************************************************************
 
@@ -335,7 +342,7 @@ const btnDimentions = {
     AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
     LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    SOFTWARE. 
+    SOFTWARE.
 
     ************************************************************************** */
 
